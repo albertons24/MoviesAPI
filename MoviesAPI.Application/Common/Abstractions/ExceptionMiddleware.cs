@@ -36,6 +36,11 @@ namespace MoviesAPI.Application.Abstractions
                 var errors = new List<string> { notFoundException.Message };
                 await HandleException(httpContext, errors, HttpStatusCode.NotFound);
             }
+            catch (BillboardCreationException billboardCreationException)
+            {
+                var errors = new List<string> { billboardCreationException.Message };
+                await HandleException(httpContext, errors, HttpStatusCode.NotAcceptable);
+            }
             catch (Exception)
             {
                 var errors = new List<string> { "Internal server error." };
