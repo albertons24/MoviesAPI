@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MoviesAPI.Application.Common.Exceptions
 {
-    public class BillboardCreationError : Exception
+    public class BillboardCreationException : Exception
     {
-        public BillboardCreationError() : base() { }
+        public BillboardCreationException() : base() { }
 
-        public BillboardCreationError(string message) : base(message) { }
+        public BillboardCreationException(string message) : base(message) { }
 
-        public BillboardCreationError(string message, Exception innerException) : base(message, innerException) { }
+        public BillboardCreationException(string message, Exception innerException) : base(message, innerException) { }
     }
 }

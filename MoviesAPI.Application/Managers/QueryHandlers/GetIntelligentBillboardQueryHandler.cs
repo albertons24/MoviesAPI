@@ -34,6 +34,9 @@ namespace MoviesAPI.Application.Managers.QueryHandlers
 
             var allGenres = await _managersRepository.GetRankedGenres(request.CityId);
 
+            if(request.CityId != null && allGenres.Any() && allGenres.Average(g2 => g2.SeatsSold) == 0)
+                allGenres = await _managersRepository.GetRankedGenres();
+
             var popularGenres = allGenres.Any() && allGenres.Average(g2 => g2.SeatsSold) != 0 ?
                 allGenres.Where(g => g.SeatsSold >= allGenres.Average(g2 => g2.SeatsSold))
                 : new List<RankedGenre>();
@@ -65,7 +68,7 @@ namespace MoviesAPI.Application.Managers.QueryHandlers
             var smallScreenRecomendations = await GetMovieRecommendationList(request.NumberOfSmallRoomScreens, numberOfWeeks, allGenres, popularGenresTMDBIds, request.StartDate, false);
 
             if(!ValidateDuplicatesAndCoincidences(bigScreenRecomendations, smallScreenRecomendations))
-                throw new BillboardCreationError("Duplicate movies found");
+                throw new BillboardCreationException("Duplicate movies found");
            
 
             for (var i = 0; i< numberOfWeeks; i++){
@@ -115,7 +118,7 @@ namespace MoviesAPI.Application.Managers.QueryHandlers
                         );
 
                 if(!discoveryMovies.Any())
-                    throw new BillboardCreationError("TMDB API returned no results for the specified criteria");
+                    throw new BillboardCreationException("TMDB API returned no results for the specified criteria");
 
                 movies.AddRange(discoveryMovies);
             }

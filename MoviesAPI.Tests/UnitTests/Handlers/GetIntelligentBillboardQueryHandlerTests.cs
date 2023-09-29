@@ -135,7 +135,7 @@ namespace MoviesAPI.Tests.UnitTests.Handlers
                 EndDate = DateTime.Now.AddDays(7)
             };
 
-            await Assert.ThrowsAsync<BillboardCreationError>(() => handler.Handle(query, default));
+            await Assert.ThrowsAsync<BillboardCreationException>(() => handler.Handle(query, default));
         }
 
         [Fact]
@@ -165,7 +165,7 @@ namespace MoviesAPI.Tests.UnitTests.Handlers
                 EndDate = DateTime.Now.AddDays(7)
             };
 
-            await Assert.ThrowsAsync<BillboardCreationError>(() => handler.Handle(query, default));
+            await Assert.ThrowsAsync<BillboardCreationException>(() => handler.Handle(query, default));
         }
     }
 }
